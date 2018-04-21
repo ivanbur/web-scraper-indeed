@@ -78,26 +78,35 @@ app.get('', function(req, res) {
         json.jobtitle = jobtitle;
       })
 
-      $("a").filter(function() {
+      $("a").filter(function(element) {
         var data = $(this);
         var jobTitleLength = jobtitle.length;
 
         if (!alreadyPushed) {
           for (var n = 0; n < jobtitle.length; n++) {
-            tempJobTitle.push(jobtitle[i]);
+            tempJobTitle.push(jobtitle[n]);
             console.log(n + "; Success")
             alreadyPushed = true;
           }
         }
 
+        console.log("debug1");
+        console.log(data);
+        console.log("\n\n\n")
+        console.log(data['0'].attribs.href);
+        console.log(data.href);
+
         for (var i = 0; i < jobTitleLength; i++) {
           if (data.text() == tempJobTitle[i]) {
             console.log(data.text());
+            window.open(data['0'].attribs.href);
             tempJobTitle.splice(i, 1);
-            console.log("tempJobTitle - " + tempJobTitle + "\n");
-            console.log("jobtitle - " + jobtitle + "\n");
+          } else {
+            console.log("tempJobTitle2 - " + tempJobTitle);
           }
         }
+
+        console.log("debug3");
 
       })
 
