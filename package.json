@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "Scrape le web.",
   "main": "app.js",
-  "author": "Scotch",
+  "author": "Ivanbur",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scotch-io/node-web-scraper"
+    "url": "https://github.com/ivanbur/web-scraper-indeed"
   },
   "dependencies": {
     "express": "latest",
