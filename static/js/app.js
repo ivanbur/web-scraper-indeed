@@ -12,7 +12,10 @@ app.get('', function(req, res) {
     if(!error) {
       var $ = cheerio.load(html);
 
+      var alreadyPushed = false;
+
       var jobtitle = [];
+      var tempJobTitle = [];
       var company = [];
       var location = [];
       var json = { jobtitle : [], company: [], location: []};
@@ -71,25 +74,31 @@ app.get('', function(req, res) {
         var data = $(this);
 
         jobtitle.push(data.text().trim());
-        console.log($("a[href$='.com']"));
 
         json.jobtitle = jobtitle;
       })
 
       $("a").filter(function() {
         var data = $(this);
+        var jobTitleLength = jobtitle.length;
 
-        var tempJobTitle = jobtitle;
-        var tempJobTitleLength = tempJobTitle.length;
-
-        for (var i = 0; i < tempJobTitleLength; i++) {
-          if (data.text() == tempJobTitle[i]) {
-            console.log(data.text());
-            tempJobTitle.splice(i, 1);
+        if (!alreadyPushed) {
+          for (var n = 0; n < jobtitle.length; n++) {
+            tempJobTitle.push(jobtitle[i]);
+            console.log(n + "; Success")
+            alreadyPushed = true;
           }
         }
 
-        //console.log(data.text());
+        for (var i = 0; i < jobTitleLength; i++) {
+          if (data.text() == tempJobTitle[i]) {
+            console.log(data.text());
+            tempJobTitle.splice(i, 1);
+            console.log("tempJobTitle - " + tempJobTitle + "\n");
+            console.log("jobtitle - " + jobtitle + "\n");
+          }
+        }
+
       })
 
       $(".location").filter(function() {
