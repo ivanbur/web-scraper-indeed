@@ -6,7 +6,10 @@ function openTabs() {
 			window.open("https://www.indeed.com/" + data["allLinks"][i]);
 		}
 	});
+
+	var jsonObj = {
+		"job": $("#jobInput").val(),
+		"location": $("#locationInput").val()
+	}
 }
-
-
 

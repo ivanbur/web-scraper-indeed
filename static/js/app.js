@@ -154,7 +154,7 @@ app.get('', function(req, res) {
 
     json.allLinks = allLinks;
 
-    fs.writeFile('./../../output.json', JSON.stringify(json, null, 4), function(err){
+    fs.writeFile('./output.json', JSON.stringify(json, null, 4), function(err){
       console.log('File successfully written! - Check your project directory for the output.json file');
     })
 
