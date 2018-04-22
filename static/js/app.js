@@ -2,7 +2,10 @@ var express = require('express');
 var fs      = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
+
 var app     = express();
+
+var json = { jobtitle : [], company: [], location: [], allLinks: []};
 
 app.get('', function(req, res) {
 
@@ -18,7 +21,7 @@ app.get('', function(req, res) {
       var tempJobTitle = [];
       var company = [];
       var location = [];
-      var json = { jobtitle : [], company: [], location: []};
+      var allLinks = [];
 
     //   $('.jobtitle.turnstileLink').filter(function() {
     //     var data = $(this);
@@ -78,6 +81,8 @@ app.get('', function(req, res) {
         json.jobtitle = jobtitle;
       })
 
+      console.log("jobtitle" + jobtitle + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
       $("a").filter(function(element) {
         var data = $(this);
         var jobTitleLength = jobtitle.length;
@@ -99,7 +104,9 @@ app.get('', function(req, res) {
         for (var i = 0; i < jobTitleLength; i++) {
           if (data.text() == tempJobTitle[i]) {
             console.log(data.text());
-            window.open(data['0'].attribs.href);
+            allLinks.push(data['0'].attribs.href);
+            //window.open(data['0'].attribs.href);
+
             tempJobTitle.splice(i, 1);
           } else {
             console.log("tempJobTitle2 - " + tempJobTitle);
@@ -142,16 +149,20 @@ app.get('', function(req, res) {
     console.log(json);
     for (var n = 0; n < jobtitle.length; n++) {
       console.log(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n");
+      res.write(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n");
     }
 
-    // fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-    //   console.log('File successfully written! - Check your project directory for the output.json file');
-    // })
+    json.allLinks = allLinks;
 
-    res.send('Check your console!')
+    fs.writeFile('./../../output.json', JSON.stringify(json, null, 4), function(err){
+      console.log('File successfully written! - Check your project directory for the output.json file');
+    })
+
+    //res.send('Check your console!')
+    //res.send(json);
   })
 })
 
-app.listen('8081')
-console.log('Magic happens on port 8081');
+app.listen(8081);
+console.log("Magic happens on port 8081");
 exports = module.exports = app;

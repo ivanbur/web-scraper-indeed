@@ -3,14 +3,23 @@
   "version": "0.0.1",
   "description": "Scrape le web.",
   "main": "app.js",
+  "scripts": {
+    "dev": "nodemon /static/js/app.js"
+  },
   "author": "Ivanbur",
   "repository": {
     "type": "git",
     "url": "https://github.com/ivanbur/web-scraper-indeed"
   },
   "dependencies": {
-    "express": "latest",
-    "request": "latest",
-    "cheerio": "latest"
+    "body-parser": "^1.18.2",
+    "cheerio": "latest",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "mongodb": "^2.2.16",
+    "request": "^2.85.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }
