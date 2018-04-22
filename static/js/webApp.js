@@ -17,14 +17,17 @@ var saveData = (function () {
 	};
 }());
 
+var data = {"job": "computer programmer", "location": "freemont, ca"};
+
+if (document.cookie != "downloaded=true") {
+	saveData(data, fileName);
+	document.cookie = "downloaded=true";
+}
+
 function openTabs() {
 	$.getJSON("./static/js/output.json", function (data) {
 		for (var i = 0; i < data["allLinks"].length; i++) {
 			window.open("https://www.indeed.com/" + data["allLinks"][i]);
 		}
 	});
-
-	var data = {"job": $("#jobInput").val(), "location": $("#locationInput").val()};
-
-	saveData(data, fileName);
 }

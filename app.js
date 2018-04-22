@@ -2,6 +2,7 @@ var express = require('express');
 var fs      = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
+var cmd     = require('node-cmd/cmd.js');
 var os      = require('os');
 var jsonObj = require(os.homedir() + "/downloads/my-download.json");
 
@@ -13,8 +14,33 @@ app.get('', function(req, res) {
 
   var job = jsonObj["job"].trim();
   var location = jsonObj["location"].trim();
+  var tempJob = job;
+  var tempLocation = location;
+
+  String.prototype.replaceAt=function(index, replacement) {
+    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+  }
+
+  for (var num1 = 0; num1 < job.length; num1++) {
+    if (job.charAt(num1) == " ") {
+      tempJob = job.replaceAt(num1, "+");
+    }
+  }
+
+  job = tempJob;
+
+  for (var num2 = 0; num2 < location.length; num2++) {
+    if (location.charAt(num2) == " ") {
+      tempLocation = location.replaceAt(num2, "+");
+    } else if (location.charAt(num2) == ",") {
+      tempLocation = location.replaceAt(num2, "%2C");
+    }
+  }
+
+  location = tempLocation;
 
   url = 'https://www.indeed.com/jobs?q=' + job + '&l=' + location + '&start=0';
+  console.log(url);
 
   request(url, function(error, response, html) {
     if(!error) {
@@ -81,15 +107,17 @@ app.get('', function(req, res) {
       res.write(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n");
     }
 
+    res.write("\n\n\n\n\n" + "Switch to the tab that says 'localhost:5000', hard refresh the page by pressing command + shift + r, and clicks 'Go' to run the program.")
+
     json.allLinks = allLinks;
 
-    fs.writeFile('./output.json', JSON.stringify(json, null, 4), function(err){
-      console.log('File successfully written! - Check your project directory for the output.json file');
+    fs.writeFile('./static/js/output.json', JSON.stringify(json, null, 4), function(err){
+      console.log('Now type in "python3 pythonCode.py"');
     })
 
   })
 })
 
-app.listen(5000);
-console.log("Refresh localhost:5000");
+app.listen(8000);
+console.log("Refresh localhost:8000");
 exports = module.exports = app;
