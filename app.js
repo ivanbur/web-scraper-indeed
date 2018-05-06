@@ -39,7 +39,6 @@ app.get('', function(req, res) {
   location = tempLocation;
 
   url = 'https://www.indeed.com/jobs?q=' + job + '&l=' + location + '&start=0';
-  console.log(url);
 
   request(url, function(error, response, html) {
     if(!error) {
@@ -103,7 +102,7 @@ app.get('', function(req, res) {
     console.log(json);
     for (var n = 0; n < jobtitle.length; n++) {
       console.log(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n");
-      res.write(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n");
+      res.write(jobtitle[n] + " :: " + company[n] + " :: " + location[n] + "\n\n");
     }
 
     res.write("\n\n\n\n\n" + "Switch to the tab that says 'localhost:5000', hard refresh the page by pressing command + shift + r, and clicks 'Go' to run the program.")
@@ -111,7 +110,7 @@ app.get('', function(req, res) {
     json.allLinks = allLinks;
 
     fs.writeFile('./static/js/output.json', JSON.stringify(json, null, 4), function(err){
-      console.log('Now type in "python3 pythonCode.py"');
+      console.log('Now open the tab that says "localhost:5000" and press command + shift + r to hard refresh it. Afterwards click the button.');
     })
 
   })
