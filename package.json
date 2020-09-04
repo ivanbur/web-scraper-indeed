@@ -16,7 +16,7 @@
     "cheerio": "latest",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
-    "mongodb": "^2.2.16",
+    "mongodb": "^3.1.13",
     "node-cmd": "^3.0.0",
     "os": "^0.1.1",
     "request": "^2.85.0"
